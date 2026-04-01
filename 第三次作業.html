@@ -60,10 +60,35 @@
       font-size: 0.95rem;
       line-height: 1.5;
     }
+
+    #topHint {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #FFD700;
+      color: black;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
   </style>
 </head>
 <body>
   <header>JOJO的奇妙冒險 — 歷代主角介紹</header>
+
+  <div style="text-align:center; padding: 1rem;">
+    <button onclick="showQuote()" 
+      style="padding:10px 20px; font-size:16px; border-radius:8px; cursor:pointer;">
+      隨機主角名言
+    </button>
+    <p id="quoteBox" style="margin-top:10px; color:#FFD700; font-weight:bold;"></p>
+  </div>
+
 
   <div class="container">
     <div class="card">
@@ -128,5 +153,38 @@
     </div>
   </div>
 
+<button id="topHint" onclick="scrollTopSmooth()">↑</button>
+
+ <script>
+    const quotes = [
+      "我不會原諒你！——喬納森",
+      "你的下一句是……——喬瑟夫",
+      "無駄無駄無駄無駄！——DIO",
+      "Yare Yare Daze...——承太郎",
+      "我有夢想！——喬魯諾",
+      "Yare Yare——空條徐倫"
+    ];
+
+    function showQuote() {
+      const random = Math.floor(Math.random() * quotes.length);
+      document.getElementById("quoteBox").textContent = quotes[random];
+    }
+
+    window.addEventListener("scroll", () => {
+      const btn = document.getElementById("topHint");
+      btn.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+
+    function scrollTopSmooth() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        card.style.background = "rgba(255,255,255,0.2)";
+        setTimeout(() => card.style.background = "rgba(255,255,255,0.08)", 200);
+      });
+    });
+  </script>
 </body>
 </html>
